@@ -1,0 +1,12 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: 0 Abstract
+- file: 1 Introduction
+- file: 2 Fabrication and Microstructure
+- file: 3 Thermophysical Properties
+- file: 4 Mechanical Properties
+- file: 5 Radiation Effects on Mechanical Properties
