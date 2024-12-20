@@ -1,0 +1,157 @@
+Traceback (most recent call last):
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\site-packages\nbclient\client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\indro\miniconda3\envs\jb\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Load excel data for desired property name
+material_property = "Thermal Emissivity"
+var_names, variables, dataframe =\
+    load_data(excel_filename, material_property,\
+    header_rows_list=[2], num_data_rows=6, room_temp=293, display_data_table_bool = True)
+
+x_data_list = variables[::2]
+y_data_list = variables[1::2]
+
+# Temperature range and function initializations
+rho_e_polished_func = lambda T: 4.2757e-5 + 7.6271e-8 * T - 2.2529e-11 * T**2
+rho_e_rolled_func = lambda T: 7e-5 + 3.15e-7 * T - 2.8e-12 * T**2
+sigma_polished_func = lambda T: 0.766 * (T * rho_e_polished_func(T))**(1/2) - (0.309 - 0.0889 * np.log(T*rho_e_polished_func(T))) * (T * rho_e_polished_func(T)) - 0.0175 * (T * rho_e_polished_func(T))**(3/2)
+sigma_rolled_func = lambda T: 0.766 * (T * rho_e_rolled_func(T))**(1/2) - (0.309 - 0.0889 * np.log(T*rho_e_rolled_func(T))) * (T * rho_e_rolled_func(T)) - 0.0175 * (T * rho_e_rolled_func(T))**(3/2)
+
+X_fit = np.linspace(300, 1000, 1000)
+Y_fit_polished = sigma_polished_func(X_fit)
+Y_fit_rolled = sigma_rolled_func(X_fit)
+
+# Plot formatting
+title = 'Thermal emissivity of F82H'
+x_label = 'Temperature [K]'
+y_label = r'$\sigma$'
+data_labels = ['Polished data', 'Rolled data']
+fit_labels = ['Polished fit', 'Rolled fit']
+x_lim = [np.min(X_fit), np.max(X_fit)]
+y_lim = [0, 0.35]
+fit_line_width = 2
+
+data_plot(x_data_list, y_data_list, x_fit_list=[X_fit, X_fit], y_fit_list=[Y_fit_polished, Y_fit_rolled],\
+            x_label=x_label, y_label=y_label, title=title,\
+            scale='linear', x_lim=x_lim, y_lim=y_lim,\
+            grid=True, legend=True, data_labels=data_labels, fit_labels=fit_labels,\
+            data_colors=None, fit_colors=None, marker_size=m_size,\
+            fit_line_width=fit_line_width, x_label_font_size=f_size, y_label_font_size=f_size, title_font_size=f_size,\
+            legend_font_size=f_size, legend_loc='best', legend_num_cols=2)
+------------------
+
+----- stderr -----
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:380: SyntaxWarning: invalid escape sequence '\c'
+  if '\cdot' in latex_to_print:
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:381: SyntaxWarning: invalid escape sequence '\c'
+  latex_to_print = latex_to_print.replace('\cdot', '\\times')
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:395: SyntaxWarning: invalid escape sequence '\c'
+  if '\cdot' in latex_to_print:
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:396: SyntaxWarning: invalid escape sequence '\c'
+  latex_to_print = latex_to_print.replace('\cdot', '\\times')
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:418: SyntaxWarning: invalid escape sequence '\c'
+  if '\cdot' in latex_to_print:
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:419: SyntaxWarning: invalid escape sequence '\c'
+  latex_to_print = latex_to_print.replace('\cdot', '\\times')
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:443: SyntaxWarning: invalid escape sequence '\c'
+  if '\cdot' in latex_to_print:
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:444: SyntaxWarning: invalid escape sequence '\c'
+  latex_to_print = latex_to_print.replace('\cdot', '\\times')
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:497: SyntaxWarning: invalid escape sequence '\c'
+  if '\cdot' in latex_to_print:
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:498: SyntaxWarning: invalid escape sequence '\c'
+  latex_to_print = latex_to_print.replace('\cdot', '\\times')
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:511: SyntaxWarning: invalid escape sequence '\c'
+  if '\cdot' in latex_to_print:
+C:\Users\indro\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:512: SyntaxWarning: invalid escape sequence '\c'
+  latex_to_print = latex_to_print.replace('\cdot', '\\times')
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Cell [1;32mIn[7], line 4[0m
+[0;32m      1[0m [38;5;66;03m# Load excel data for desired property name[39;00m
+[0;32m      2[0m material_property [38;5;241m=[39m [38;5;124m"[39m[38;5;124mThermal Emissivity[39m[38;5;124m"[39m
+[0;32m      3[0m var_names, variables, dataframe [38;5;241m=[39m\
+[1;32m----> 4[0m     [43mload_data[49m[43m([49m[43mexcel_filename[49m[43m,[49m[43m [49m[43mmaterial_property[49m[43m,[49m[43m\[49m
+[0;32m      5[0m [43m    [49m[43mheader_rows_list[49m[38;5;241;43m=[39;49m[43m[[49m[38;5;241;43m2[39;49m[43m][49m[43m,[49m[43m [49m[43mnum_data_rows[49m[38;5;241;43m=[39;49m[38;5;241;43m6[39;49m[43m,[49m[43m [49m[43mroom_temp[49m[38;5;241;43m=[39;49m[38;5;241;43m293[39;49m[43m,[49m[43m [49m[43mdisplay_data_table_bool[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+[0;32m      7[0m x_data_list [38;5;241m=[39m variables[::[38;5;241m2[39m]
+[0;32m      8[0m y_data_list [38;5;241m=[39m variables[[38;5;241m1[39m::[38;5;241m2[39m]
+
+File [1;32m~\Documents\GitHub\DatabaseCodes\Jupyter\F82H\JupyterBook\models_2_0.py:37[0m, in [0;36mload_data[1;34m(filename, sheet_name, header_rows_list, num_data_rows, room_temp, display_data_table_bool)[0m
+[0;32m     31[0m [38;5;28;01mdef[39;00m [38;5;21mload_data[39m(filename, sheet_name, header_rows_list[38;5;241m=[39m[[38;5;241m1[39m, [38;5;241m3[39m], num_data_rows[38;5;241m=[39m[38;5;241m20[39m, room_temp[38;5;241m=[39m[38;5;241m293[39m, display_data_table_bool[38;5;241m=[39m[38;5;28;01mTrue[39;00m):
+[0;32m     32[0m 
+[0;32m     33[0m     [38;5;66;03m# Column labels, used to construct variable names[39;00m
+[0;32m     34[0m     [38;5;66;03m# Variable names that mirror the column labels, only removing non-alphanumeric characters in the translation_table[39;00m
+[0;32m     35[0m     [38;5;28;01mif[39;00m [38;5;28mlen[39m(header_rows_list) [38;5;241m==[39m [38;5;241m1[39m:
+[1;32m---> 37[0m         col_names [38;5;241m=[39m [38;5;28mlist[39m([43mpd[49m[38;5;241;43m.[39;49m[43mread_excel[49m[43m([49m[43mfilename[49m[43m,[49m[43m [49m[43msheet_name[49m[38;5;241;43m=[39;49m[43msheet_name[49m[43m,[49m[43m [49m[43mheader[49m[38;5;241;43m=[39;49m[43mheader_rows_list[49m[43m[[49m[38;5;241;43m0[39;49m[43m][49m[38;5;241;43m-[39;49m[38;5;241;43m1[39;49m[43m,[49m[43m [49m[43mnrows[49m[38;5;241;43m=[39;49m[38;5;241;43m1[39;49m[43m)[49m)
+[0;32m     38[0m         cols_with_data [38;5;241m=[39m [i [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m0[39m, [38;5;28mlen[39m(col_names)) [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mUnnamed[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m col_names[i]]
+[0;32m     39[0m         col_names [38;5;241m=[39m [col_name [38;5;28;01mfor[39;00m col_name [38;5;129;01min[39;00m col_names [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mUnnamed[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m col_name]
+
+File [1;32m~\miniconda3\envs\jb\Lib\site-packages\pandas\io\excel\_base.py:495[0m, in [0;36mread_excel[1;34m(io, sheet_name, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skiprows, nrows, na_values, keep_default_na, na_filter, verbose, parse_dates, date_parser, date_format, thousands, decimal, comment, skipfooter, storage_options, dtype_backend, engine_kwargs)[0m
+[0;32m    493[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28misinstance[39m(io, ExcelFile):
+[0;32m    494[0m     should_close [38;5;241m=[39m [38;5;28;01mTrue[39;00m
+[1;32m--> 495[0m     io [38;5;241m=[39m [43mExcelFile[49m[43m([49m
+[0;32m    496[0m [43m        [49m[43mio[49m[43m,[49m
+[0;32m    497[0m [43m        [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[43mstorage_options[49m[43m,[49m
+[0;32m    498[0m [43m        [49m[43mengine[49m[38;5;241;43m=[39;49m[43mengine[49m[43m,[49m
+[0;32m    499[0m [43m        [49m[43mengine_kwargs[49m[38;5;241;43m=[39;49m[43mengine_kwargs[49m[43m,[49m
+[0;32m    500[0m [43m    [49m[43m)[49m
+[0;32m    501[0m [38;5;28;01melif[39;00m engine [38;5;129;01mand[39;00m engine [38;5;241m!=[39m io[38;5;241m.[39mengine:
+[0;32m    502[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+[0;32m    503[0m         [38;5;124m"[39m[38;5;124mEngine should not be specified when passing [39m[38;5;124m"[39m
+[0;32m    504[0m         [38;5;124m"[39m[38;5;124man ExcelFile - ExcelFile already has the engine set[39m[38;5;124m"[39m
+[0;32m    505[0m     )
+
+File [1;32m~\miniconda3\envs\jb\Lib\site-packages\pandas\io\excel\_base.py:1550[0m, in [0;36mExcelFile.__init__[1;34m(self, path_or_buffer, engine, storage_options, engine_kwargs)[0m
+[0;32m   1548[0m     ext [38;5;241m=[39m [38;5;124m"[39m[38;5;124mxls[39m[38;5;124m"[39m
+[0;32m   1549[0m [38;5;28;01melse[39;00m:
+[1;32m-> 1550[0m     ext [38;5;241m=[39m [43minspect_excel_format[49m[43m([49m
+[0;32m   1551[0m [43m        [49m[43mcontent_or_path[49m[38;5;241;43m=[39;49m[43mpath_or_buffer[49m[43m,[49m[43m [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[43mstorage_options[49m
+[0;32m   1552[0m [43m    [49m[43m)[49m
+[0;32m   1553[0m     [38;5;28;01mif[39;00m ext [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m   1554[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+[0;32m   1555[0m             [38;5;124m"[39m[38;5;124mExcel file format cannot be determined, you must specify [39m[38;5;124m"[39m
+[0;32m   1556[0m             [38;5;124m"[39m[38;5;124man engine manually.[39m[38;5;124m"[39m
+[0;32m   1557[0m         )
+
+File [1;32m~\miniconda3\envs\jb\Lib\site-packages\pandas\io\excel\_base.py:1402[0m, in [0;36minspect_excel_format[1;34m(content_or_path, storage_options)[0m
+[0;32m   1399[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(content_or_path, [38;5;28mbytes[39m):
+[0;32m   1400[0m     content_or_path [38;5;241m=[39m BytesIO(content_or_path)
+[1;32m-> 1402[0m [38;5;28;01mwith[39;00m [43mget_handle[49m[43m([49m
+[0;32m   1403[0m [43m    [49m[43mcontent_or_path[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mrb[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[43mstorage_options[49m[43m,[49m[43m [49m[43mis_text[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m
+[0;32m   1404[0m [43m[49m[43m)[49m [38;5;28;01mas[39;00m handle:
+[0;32m   1405[0m     stream [38;5;241m=[39m handle[38;5;241m.[39mhandle
+[0;32m   1406[0m     stream[38;5;241m.[39mseek([38;5;241m0[39m)
+
+File [1;32m~\miniconda3\envs\jb\Lib\site-packages\pandas\io\common.py:882[0m, in [0;36mget_handle[1;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
+[0;32m    873[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(
+[0;32m    874[0m             handle,
+[0;32m    875[0m             ioargs[38;5;241m.[39mmode,
+[1;32m   (...)[0m
+[0;32m    878[0m             newline[38;5;241m=[39m[38;5;124m"[39m[38;5;124m"[39m,
+[0;32m    879[0m         )
+[0;32m    880[0m     [38;5;28;01melse[39;00m:
+[0;32m    881[0m         [38;5;66;03m# Binary mode[39;00m
+[1;32m--> 882[0m         handle [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m[43mhandle[49m[43m,[49m[43m [49m[43mioargs[49m[38;5;241;43m.[39;49m[43mmode[49m[43m)[49m
+[0;32m    883[0m     handles[38;5;241m.[39mappend(handle)
+[0;32m    885[0m [38;5;66;03m# Convert BytesIO or file objects passed with an encoding[39;00m
+
+[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'F82H/F82H_data.xlsx'
+
